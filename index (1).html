@@ -126,41 +126,27 @@
   .hero-right::before {
     content: '';
     position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse at 30% 60%, rgba(74,140,63,0.35) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 20%, rgba(168,200,158,0.2) 0%, transparent 50%);
+    background: linear-gradient(to right, rgba(26,46,26,0.3) 0%, transparent 40%);
+    z-index: 1;
   }
   .hero-img-placeholder {
     width: 100%; height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    position: relative; z-index: 1;
-    padding: 3rem;
+    position: relative;
   }
-  .leaf-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-    width: 100%; max-width: 360px; opacity: 0.15;
-    position: absolute; inset: 0; margin: auto;
+  .hero-img-placeholder img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
   }
-  .leaf-cell { aspect-ratio: 1; border: 1px solid rgba(168,200,158,0.4); }
   .hero-badge {
     position: absolute; bottom: 3rem; left: 3rem;
-    background: rgba(253,251,247,0.08); border: 1px solid rgba(168,200,158,0.3);
+    background: rgba(26,46,26,0.75); border: 1px solid rgba(168,200,158,0.3);
     backdrop-filter: blur(8px);
     padding: 1.2rem 1.5rem; border-radius: 4px;
     z-index: 2;
   }
   .hero-badge p { color: var(--green-light); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
   .hero-badge strong { color: #fff; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; }
-  .hero-icon-large {
-    font-size: 8rem; line-height: 1; z-index: 2; position: relative;
-    filter: drop-shadow(0 0 40px rgba(168,200,158,0.4));
-    animation: float 6s ease-in-out infinite;
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
 
   /* SECTION SHARED */
   section { padding: 7rem 4rem; }
@@ -212,22 +198,44 @@
     color: rgba(74,140,63,0.07); line-height: 1;
   }
 
+  /* PHOTO STRIP */
+  .photo-strip {
+    display: grid; grid-template-columns: 1fr 1fr;
+    height: 420px; overflow: hidden;
+  }
+  .photo-strip-item {
+    position: relative; overflow: hidden;
+  }
+  .photo-strip-item img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .photo-strip-item:hover img { transform: scale(1.04); }
+  .photo-strip-label {
+    position: absolute; bottom: 1.5rem; left: 1.5rem;
+    background: rgba(26,46,26,0.75);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(168,200,158,0.25);
+    padding: 0.5rem 1rem; border-radius: 2px;
+    color: #fff; font-size: 0.75rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
   /* ABOUT */
   #about { background: var(--warm-white); }
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
   .about-visual {
     position: relative;
-    background: var(--green-dark);
     border-radius: 4px; overflow: hidden;
     aspect-ratio: 4/5;
-    display: flex; align-items: center; justify-content: center;
   }
-  .about-visual::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 40% 50%, rgba(74,140,63,0.4) 0%, transparent 70%);
+  .about-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
   }
-  .about-visual-icon { font-size: 6rem; position: relative; z-index: 1; }
   .about-accent-box {
     position: absolute; bottom: -1.5rem; right: -1.5rem;
     background: var(--green-accent);
@@ -397,13 +405,7 @@
   </div>
   <div class="hero-right">
     <div class="hero-img-placeholder">
-      <div class="leaf-grid">
-        <div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div>
-        <div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div>
-        <div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div>
-        <div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div>
-      </div>
-      <div class="hero-icon-large">🌿</div>
+      <img src="https://raw.githubusercontent.com/brycefultz59-jpg/RR-landscaping/main/images/home1.jpg" alt="Rob Richter Landscaping work">
     </div>
     <div class="hero-badge">
       <p>Fully Insured &amp; Licensed</p>
@@ -449,11 +451,23 @@
   </div>
 </section>
 
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <div class="photo-strip-item">
+    <img src="https://raw.githubusercontent.com/brycefultz59-jpg/RR-landscaping/main/images/lawn.jpg" alt="Lawn maintenance">
+    <div class="photo-strip-label">Lawn Maintenance</div>
+  </div>
+  <div class="photo-strip-item">
+    <img src="https://raw.githubusercontent.com/brycefultz59-jpg/RR-landscaping/main/images/patio.jpg" alt="Landscaping work">
+    <div class="photo-strip-label">Landscaping Design</div>
+  </div>
+</div>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
     <div class="about-visual">
-      <div class="about-visual-icon">🌳</div>
+      <img src="https://raw.githubusercontent.com/brycefultz59-jpg/RR-landscaping/main/images/home2.jpg" alt="Rob Richter Landscaping">
       <div class="about-accent-box">
         <p>Our Promise</p>
         <strong>Quality You Can See</strong>
