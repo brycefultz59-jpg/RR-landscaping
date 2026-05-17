@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rob Richter Landscaping Inc.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-dark: #1a2e1a;
+    --green-mid: #2d5a27;
+    --green-accent: #4a8c3f;
+    --green-light: #a8c89e;
+    --cream: #f5f1ea;
+    --warm-white: #fdfbf7;
+    --stone: #8c8579;
+    --text-dark: #1c1c1c;
+    --text-mid: #4a4a4a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(253, 251, 247, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(74, 140, 63, 0.12);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 24px rgba(26,46,26,0.08); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+  .nav-logo span { display: block; font-size: 0.65rem; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--stone); letter-spacing: 0.12em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500; color: var(--text-mid);
+    text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-accent); }
+  .nav-cta {
+    background: var(--green-mid); color: #fff;
+    padding: 0.6rem 1.5rem; border-radius: 2px;
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-dark); }
+
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem 6rem 4rem;
+    background: var(--warm-white);
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--green-accent); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--green-accent); }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 700; line-height: 1.1;
+    color: var(--green-dark);
+    margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: italic; color: var(--green-accent); }
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.7; color: var(--text-mid);
+    max-width: 440px; margin-bottom: 2.5rem; font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--green-mid); color: #fff;
+    padding: 0.85rem 2rem; border-radius: 2px;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1.5px solid var(--green-mid); color: var(--green-mid);
+    padding: 0.85rem 2rem; border-radius: 2px;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.2s; display: inline-block;
+  }
+  .btn-outline:hover { background: var(--green-mid); color: #fff; }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem;
+    padding-top: 2.5rem; border-top: 1px solid rgba(74,140,63,0.15);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif; font-size: 2rem;
+    font-weight: 700; color: var(--green-dark);
+  }
+  .stat-label { font-size: 0.75rem; color: var(--stone); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: var(--green-dark);
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(74,140,63,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(168,200,158,0.2) 0%, transparent 50%);
+  }
+  .hero-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+    padding: 3rem;
+  }
+  .leaf-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    width: 100%; max-width: 360px; opacity: 0.15;
+    position: absolute; inset: 0; margin: auto;
+  }
+  .leaf-cell { aspect-ratio: 1; border: 1px solid rgba(168,200,158,0.4); }
+  .hero-badge {
+    position: absolute; bottom: 3rem; left: 3rem;
+    background: rgba(253,251,247,0.08); border: 1px solid rgba(168,200,158,0.3);
+    backdrop-filter: blur(8px);
+    padding: 1.2rem 1.5rem; border-radius: 4px;
+    z-index: 2;
+  }
+  .hero-badge p { color: var(--green-light); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .hero-badge strong { color: #fff; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; }
+  .hero-icon-large {
+    font-size: 8rem; line-height: 1; z-index: 2; position: relative;
+    filter: drop-shadow(0 0 40px rgba(168,200,158,0.4));
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* SECTION SHARED */
+  section { padding: 7rem 4rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--green-accent);
+    display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;
+  }
+  .section-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--green-accent); }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; color: var(--green-dark);
+    line-height: 1.15; margin-bottom: 1.25rem;
+  }
+  .section-intro {
+    font-size: 1rem; color: var(--text-mid); line-height: 1.75;
+    max-width: 540px; font-weight: 300;
+  }
+
+  /* SERVICES */
+  #services { background: var(--cream); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; background: rgba(74,140,63,0.12); }
+  .service-card {
+    background: var(--warm-white);
+    padding: 3rem 2.5rem;
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 3px; background: var(--green-accent);
+    transition: width 0.4s ease;
+  }
+  .service-card:hover { background: #fff; }
+  .service-card:hover::after { width: 100%; }
+  .service-icon { font-size: 2.2rem; margin-bottom: 1.25rem; display: block; }
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem; font-weight: 600;
+    color: var(--green-dark); margin-bottom: 0.75rem;
+  }
+  .service-card p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; font-weight: 300; }
+  .service-num {
+    position: absolute; top: 2rem; right: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 700;
+    color: rgba(74,140,63,0.07); line-height: 1;
+  }
+
+  /* ABOUT */
+  #about { background: var(--warm-white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-visual {
+    position: relative;
+    background: var(--green-dark);
+    border-radius: 4px; overflow: hidden;
+    aspect-ratio: 4/5;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 40% 50%, rgba(74,140,63,0.4) 0%, transparent 70%);
+  }
+  .about-visual-icon { font-size: 6rem; position: relative; z-index: 1; }
+  .about-accent-box {
+    position: absolute; bottom: -1.5rem; right: -1.5rem;
+    background: var(--green-accent);
+    padding: 1.5rem 2rem; border-radius: 4px;
+    z-index: 2;
+  }
+  .about-accent-box p { color: rgba(255,255,255,0.8); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .about-accent-box strong { color: #fff; font-family: 'Playfair Display', serif; font-size: 1.4rem; display: block; margin-top: 0.2rem; }
+  .about-content { padding-right: 2rem; }
+  .about-content p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.8; font-weight: 300; margin-bottom: 1.25rem; }
+  .about-values { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+  .value-item {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.875rem; color: var(--text-mid);
+  }
+  .value-item::before {
+    content: ''; display: block; width: 8px; height: 8px;
+    background: var(--green-accent); border-radius: 50%; flex-shrink: 0;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--green-dark); }
+  #contact .section-label { color: var(--green-light); }
+  #contact .section-label::before { background: var(--green-light); }
+  #contact h2 { color: #fff; }
+  #contact .section-intro { color: rgba(255,255,255,0.6); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+  .contact-info { margin-top: 2rem; }
+  .contact-detail {
+    display: flex; gap: 1rem; align-items: flex-start;
+    margin-bottom: 1.75rem;
+  }
+  .contact-detail-icon {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(168,200,158,0.25);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .contact-detail-text p { font-size: 0.72rem; color: var(--green-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.2rem; }
+  .contact-detail-text strong { color: #fff; font-weight: 400; font-size: 0.9rem; }
+
+  .quote-form {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(168,200,158,0.2);
+    border-radius: 4px; padding: 2.5rem;
+  }
+  .quote-form h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: #fff; margin-bottom: 1.75rem; font-weight: 600;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .form-group label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green-light); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(168,200,158,0.2);
+    border-radius: 2px; color: #fff;
+    padding: 0.75rem 1rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem; outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--green-accent); }
+  .form-group select option { background: var(--green-dark); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%; padding: 1rem;
+    background: var(--green-accent); color: #fff;
+    border: none; border-radius: 2px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--green-mid); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    background: #0e1a0e;
+    padding: 2.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem; color: rgba(255,255,255,0.5);
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #home { grid-template-columns: 1fr; }
+    .hero-right { min-height: 320px; }
+    .hero-left { padding: 3rem 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-visual { aspect-ratio: 3/2; }
+    .about-content { padding-right: 0; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    Rob Richter Landscaping
+    <span>Inc. &nbsp;·&nbsp; Monroe, OH</span>
+  </div>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Professional Landscaping</div>
+    <h1>Your Property,<br><em>Perfected.</em></h1>
+    <p class="hero-sub">Rob Richter Landscaping Inc. delivers precision lawn care, thoughtful landscape design, and dependable seasonal services — so your property always looks its best.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request a Free Quote</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Properties Served</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Core Services</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-placeholder">
+      <div class="leaf-grid">
+        <div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div>
+        <div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div>
+        <div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div>
+        <div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div><div class="leaf-cell"></div>
+      </div>
+      <div class="hero-icon-large">🌿</div>
+    </div>
+    <div class="hero-badge">
+      <p>Fully Insured &amp; Licensed</p>
+      <strong>Trusted Since Day One</strong>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2>Our Core Services</h2>
+    </div>
+    <p class="section-intro">From routine maintenance to seasonal transformations, we bring expertise and care to every job.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <span class="service-num">01</span>
+      <span class="service-icon">🌱</span>
+      <h3>Lawn Mowing &amp; Maintenance</h3>
+      <p>Consistent, reliable mowing schedules tailored to your lawn's growth cycle. Edging, trimming, and cleanup included for a crisp, finished look every visit.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-num">02</span>
+      <span class="service-icon">🏡</span>
+      <h3>Landscaping Design</h3>
+      <p>Custom landscape plans that enhance curb appeal and complement your property's architecture. From concept to completion, we bring your outdoor vision to life.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-num">03</span>
+      <span class="service-icon">🌸</span>
+      <h3>Mulching &amp; Planting</h3>
+      <p>Professional mulch installation and seasonal planting to protect your soil, reduce weeds, and add color and texture to your beds all year long.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-num">04</span>
+      <span class="service-icon">❄️</span>
+      <h3>Snow Removal</h3>
+      <p>Prompt, dependable snow and ice clearing for driveways, walkways, and parking areas. We keep your property safe and accessible through even the toughest Ohio winters.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-visual-icon">🌳</div>
+      <div class="about-accent-box">
+        <p>Our Promise</p>
+        <strong>Quality You Can See</strong>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-label">About Us</div>
+      <h2>Built on Hard Work &amp; Attention to Detail</h2>
+      <p>Rob Richter Landscaping Inc. was founded on a simple belief: every property deserves to be cared for with the same pride and precision as your own. What started as a local lawn care operation has grown into a full-service landscaping company trusted by hundreds of homeowners and businesses.</p>
+      <p>Rob and his crew bring the same hands-on dedication to every job — whether it's a weekly mow or a full landscape redesign. We show up on time, do the work right, and treat your property with respect.</p>
+      <div class="about-values">
+        <div class="value-item">Locally owned and operated in Monroe, OH</div>
+        <div class="value-item">Fully licensed and insured</div>
+        <div class="value-item">Consistent crews — same faces, every visit</div>
+        <div class="value-item">Free estimates with no pressure</div>
+        <div class="value-item">Residential &amp; commercial properties welcome</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label">Get in Touch</div>
+      <h2>Let's Talk About Your Property</h2>
+      <p class="section-intro">Ready for a lawn that turns heads? Reach out for a free, no-obligation quote. We'll get back to you within one business day.</p>
+      <div class="contact-info">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📞</div>
+          <div class="contact-detail-text">
+            <p>Phone</p>
+            <strong>(513) 539-0300</strong>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">✉️</div>
+          <div class="contact-detail-text">
+            <p>Email</p>
+            <strong>info@robrichterland.com</strong>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div class="contact-detail-text">
+            <p>Service Area</p>
+            <strong>240 Senate Dr, Monroe, OH 45050</strong>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🕐</div>
+          <div class="contact-detail-text">
+            <p>Hours</p>
+            <strong>Mon–Fri, 8am – 5pm</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="quote-form">
+      <h3>Request a Free Quote</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input id="firstName" type="text" placeholder="Rob">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input id="lastName" type="text" placeholder="Richter">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone</label>
+          <input id="phone" type="tel" placeholder="(513) 000-0000">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input id="email" type="email" placeholder="you@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service Needed</label>
+        <select id="service">
+          <option value="" disabled selected>Select a service…</option>
+          <option>Lawn Mowing &amp; Maintenance</option>
+          <option>Landscaping Design</option>
+          <option>Mulching &amp; Planting</option>
+          <option>Snow Removal</option>
+          <option>Multiple / Not Sure</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Property Address</label>
+        <input id="address" type="text" placeholder="123 Main St, Monroe, OH">
+      </div>
+      <div class="form-group">
+        <label>Tell Us More (Optional)</label>
+        <textarea id="message" placeholder="Describe your property or any specific needs…"></textarea>
+      </div>
+      <button class="form-submit">Submit Request →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Rob Richter Landscaping Inc.</div>
+  <p>© 2026 Rob Richter Landscaping Inc. All rights reserved.</p>
+  <p>Monroe, OH &nbsp;·&nbsp; Licensed &amp; Insured</p>
+</footer>
+
+<script>
+  // Scroll shadow on nav
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Google Sheets form submission via hidden form POST (bypasses CORS)
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynhwjZO8_pFVwSxaOKE0ad3eRX0oZ9kSL5sH0VXcQowc9sM7EHnHCAKb0hhAXgVlg2/exec';
+
+  document.querySelector('.form-submit').addEventListener('click', function () {
+    const btn = this;
+
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const phone     = document.getElementById('phone').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    const service   = document.getElementById('service').value;
+    const address   = document.getElementById('address').value.trim();
+    const message   = document.getElementById('message').value.trim();
+
+    // Validation
+    if (!firstName || !lastName || !phone || !email || !service || !address) {
+      btn.textContent = 'Please fill in all fields';
+      btn.style.background = '#8c4a27';
+      setTimeout(() => { btn.textContent = 'Submit Request →'; btn.style.background = ''; }, 2500);
+      return;
+    }
+
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    // Create a hidden iframe to receive the response (avoids CORS)
+    const iframe = document.createElement('iframe');
+    iframe.name = 'hidden-iframe';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    // Create a hidden form and submit it into the iframe
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = SCRIPT_URL;
+    form.target = 'hidden-iframe';
+
+    const fields = { firstName, lastName, phone, email, service, address, message };
+    Object.entries(fields).forEach(([key, val]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = val;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Clean up after submission
+    setTimeout(() => {
+      document.body.removeChild(form);
+      document.body.removeChild(iframe);
+
+      btn.textContent = '✓ Request Sent!';
+      btn.style.background = '#2d5a27';
+
+      // Clear the form fields
+      ['firstName','lastName','phone','email','service','address','message'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+
+      setTimeout(() => {
+        btn.textContent = 'Submit Request →';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 4000);
+    }, 2000);
+  });
+</script>
+</body>
+</html>
